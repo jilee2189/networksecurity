@@ -1,6 +1,6 @@
 import os
 import sys
-
+import tempfile
 from networksecurity.exception.exception import NetworkSecurityException 
 from networksecurity.logging.logger import logging
 
@@ -26,12 +26,15 @@ from sklearn.ensemble import (
 import mlflow
 from urllib.parse import urlparse
 
-#import dagshub
-#dagshub.init(repo_owner='krishnaik06', repo_name='networksecurity', mlflow=True)
+os.environ["MLFLOW_ENABLE_ARTIFACT_LOGGING"] = "false"
 
-os.environ["MLFLOW_TRACKING_URI"]="file:///C:/Users/19258/Desktop/MLops/networksecurity/mlruns"#"https://dagshub.com/krishnaik06/networksecurity.mlflow"
-os.environ["MLFLOW_TRACKING_USERNAME"]="krishnaik06"
-os.environ["MLFLOW_TRACKING_PASSWORD"]="7104284f1bb44ece21e0e2adb4e36a250ae3251f"
+import dagshub
+dagshub.init(repo_owner='jilee2189', repo_name='networksecurity', mlflow=True)
+
+#os.environ["MLFLOW_TRACKING_URI"]="file:///C:/Users/19258/Desktop/MLops/networksecurity/mlruns"#"https://dagshub.com/krishnaik06/networksecurity.mlflow"
+#os.environ["MLFLOW_TRACKING_USERNAME"]="krishnaik06"
+#os.environ["MLFLOW_TRACKING_PASSWORD"]="7104284f1bb44ece21e0e2adb4e36a250ae3251f"
+
 
 
 class ModelTrainer:
@@ -53,10 +56,17 @@ class ModelTrainer:
             mlflow.log_metric("f1_score",f1_score)
             mlflow.log_metric("precision",precision_score)
             mlflow.log_metric("recall_score",recall_score)
-            mlflow.sklearn.log_model(best_model,"model")
+            
+            #mlflow.sklearn.log_model(sk_model=best_model, artifact_path="model")
+            #mlflow.sklearn.log_model(best_model,"model")
             # Model registry does not work with file store
             #if tracking_url_type_store != "file":
-
+        # Save model to a temp folder manually
+            with tempfile.TemporaryDirectory() as tmp_dir:
+                model_path = f"{tmp_dir}/model"
+                mlflow.sklearn.save_model(best_model, model_path)
+            # Log the saved model directory as an artifact (no registry call)
+                mlflow.log_artifacts(model_path, artifact_path="model")
                 # Register the model
                 # There are other ways to use the Model Registry, which depends on the use case,
                 # please refer to the doc for more information:
