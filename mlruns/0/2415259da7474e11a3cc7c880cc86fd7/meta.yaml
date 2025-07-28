@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/19258/Desktop/MLops/networksecurity/mlruns/0/2415259da7474e11a3cc7c880cc86fd7/artifacts
+end_time: 1753661212193
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 2415259da7474e11a3cc7c880cc86fd7
+run_name: funny-chimp-285
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1753661202557
+status: 3
+tags: []
+user_id: krishnaik06

@@ -1,0 +1,10 @@
+artifact_location: file:///C:/Users/19258/Desktop/MLops/networksecurity/mlruns/0/models/m-1913a070e70a4461932b48b5693502ab/artifacts
+creation_timestamp: 1753661212441
+experiment_id: '0'
+last_updated_timestamp: 1753661218716
+model_id: m-1913a070e70a4461932b48b5693502ab
+model_type: null
+name: model
+source_run_id: ade52b5edcbe4d0989092f9225690d78
+status: 2
+status_message: null
